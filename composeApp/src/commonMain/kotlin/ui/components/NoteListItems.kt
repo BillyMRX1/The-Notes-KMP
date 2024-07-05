@@ -7,18 +7,20 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import viewmodel.HomeViewModel
 
 @Composable
 fun NoteListItems(
     viewModel: HomeViewModel,
+    navController: NavHostController,
 ) {
     Column(
         Modifier.padding(horizontal = 8.dp, vertical = 8.dp)
     ) {
         LazyColumn {
             items(viewModel.allNotes.value) { note ->
-                NoteItem(note, viewModel)
+                NoteItem(note, viewModel, navController)
             }
         }
     }

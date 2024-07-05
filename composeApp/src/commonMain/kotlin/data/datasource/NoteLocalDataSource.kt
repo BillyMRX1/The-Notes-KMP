@@ -7,4 +7,5 @@ interface NoteLocalDataSource {
     suspend fun createNote(note: Note)
     suspend fun deleteNote(id: Long)
     suspend fun updateNote(note: Note)
+    suspend fun getNote(id: Long): Note?
 }

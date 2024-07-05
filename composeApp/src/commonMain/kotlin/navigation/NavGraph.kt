@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ui.page.CreateNotePage
 import ui.page.HomePage
+import util.Constant.EDIT_NOTES_ARGUMENT
 
 @Composable
 fun NavGraph(navController: NavHostController) {
@@ -49,15 +50,15 @@ fun NavGraph(navController: NavHostController) {
         ) {
             CreateNotePage(navController)
         }
-//        composable(
-//            route = Screen.EditNotes.route
-//        ) {
-//            val notes = navController.previousBackStackEntry?.savedStateHandle?.get<Notes>(EDIT_NOTES_ARGUMENT)
-//            CreateNotesScreen(
-//                navController,
-//                isEditNote = true,
-//                notes = notes
-//            )
-//        }
+        composable(
+            route = Screen.EditNotes.route
+        ) {
+            val noteId = navController.previousBackStackEntry?.savedStateHandle?.get<Long>(EDIT_NOTES_ARGUMENT)
+            CreateNotePage(
+                navController,
+                isEditNote = true,
+                noteId = noteId
+            )
+        }
     }
 }

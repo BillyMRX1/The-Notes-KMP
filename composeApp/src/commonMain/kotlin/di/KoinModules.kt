@@ -8,6 +8,7 @@ import domain.usecase.CreateNoteUseCase
 import domain.usecase.GetAllNotesUseCase
 import domain.usecase.DeleteNoteUseCase
 import domain.usecase.UpdateNoteUseCase
+import domain.usecase.GetNoteUseCase
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -41,6 +42,7 @@ val provideUseCaseModule = module {
     singleOf(::GetAllNotesUseCase)
     singleOf(::DeleteNoteUseCase)
     singleOf(::UpdateNoteUseCase)
+    singleOf(::GetNoteUseCase)
 }
 
 val provideViewModelModule = module {

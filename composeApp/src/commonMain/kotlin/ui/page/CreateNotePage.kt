@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import domain.model.Note
 import navigation.Screen
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -30,6 +31,8 @@ import viewmodel.CreateNoteViewModel
 @Composable
 fun CreateNotePage(
     navController: NavHostController,
+    isEditNote: Boolean? = false,
+    noteId: Long? = null,
 ) {
     val viewModel: CreateNoteViewModel = koinViewModel()
 
@@ -37,9 +40,13 @@ fun CreateNotePage(
         navController.popBackStack(route = Screen.Home.route, inclusive = false)
     }
 
+    if (isEditNote == true) {
+        viewModel.populateDataFromLocal(noteId)
+    }
+
     Scaffold(
         topBar = {
-            NoteAppBar(navController, viewModel)
+            NoteAppBar(navController, viewModel, isEditNote)
         }
     ) {
         Box(
@@ -72,7 +79,7 @@ fun CreateNotePage(
                     )
                 )
                 Text(
-                    text = viewModel.createdAt.value.toStringFormat(),
+                    text = viewModel.updatedAt.value.toStringFormat(),
                     color = MaterialTheme.colorScheme.tertiary,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(start = 16.dp)
