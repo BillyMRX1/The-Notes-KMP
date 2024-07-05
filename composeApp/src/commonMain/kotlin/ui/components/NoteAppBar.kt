@@ -18,7 +18,11 @@ import viewmodel.CreateNoteViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteAppBar(navController: NavHostController, viewModel: CreateNoteViewModel) {
+fun NoteAppBar(
+    navController: NavHostController,
+    viewModel: CreateNoteViewModel,
+    isEditNote: Boolean?
+) {
     TopAppBar(
         title = {
             Text(
@@ -45,7 +49,7 @@ fun NoteAppBar(navController: NavHostController, viewModel: CreateNoteViewModel)
             if (viewModel.isNoteValid.value) {
                 IconButton(
                     onClick = {
-                        viewModel.saveNotes()
+                        viewModel.saveNotes(isEditNote)
                     }
                 ) {
                     Icon(

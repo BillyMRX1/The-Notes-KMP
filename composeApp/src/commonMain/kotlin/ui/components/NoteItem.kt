@@ -22,14 +22,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import util.extensions.toStringFormat
 import domain.model.Note
+import navigation.Screen
+import util.Constant.EDIT_NOTES_ARGUMENT
 import viewmodel.HomeViewModel
 
 @Composable
 fun NoteItem(
     note: Note,
     viewModel: HomeViewModel,
+    navController: NavHostController,
 ) {
     if (viewModel.showDialog.value) {
         AlertDialog(
@@ -64,7 +68,13 @@ fun NoteItem(
             .fillMaxWidth()
             .padding(8.dp)
             .background(MaterialTheme.colorScheme.primaryContainer, RoundedCornerShape(8.dp))
-            .clickable { }
+            .clickable {
+                navController.currentBackStackEntry?.savedStateHandle?.set(
+                    EDIT_NOTES_ARGUMENT,
+                    note
+                )
+                navController.navigate(route = Screen.EditNotes.route)
+            }
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -90,7 +100,7 @@ fun NoteItem(
                     maxLines = 3
                 )
                 Text(
-                    text = note.createdAt.toStringFormat(),
+                    text = note.updatedAt.toStringFormat(),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.tertiary
                 )

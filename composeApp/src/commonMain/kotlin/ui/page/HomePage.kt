@@ -41,7 +41,7 @@ fun HomePage(navController: NavHostController) {
         }
     ) {
         Box(modifier = Modifier.padding(it)) {
-            NoteList(viewModel)
+            NoteList(viewModel, navController)
         }
     }
 }
