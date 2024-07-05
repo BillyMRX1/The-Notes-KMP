@@ -32,7 +32,7 @@ import viewmodel.CreateNoteViewModel
 fun CreateNotePage(
     navController: NavHostController,
     isEditNote: Boolean? = false,
-    notes: Note? = null,
+    noteId: Long? = null,
 ) {
     val viewModel: CreateNoteViewModel = koinViewModel()
 
@@ -41,7 +41,7 @@ fun CreateNotePage(
     }
 
     if (isEditNote == true) {
-        viewModel.populateDataFromLocal(notes)
+        viewModel.populateDataFromLocal(noteId)
     }
 
     Scaffold(

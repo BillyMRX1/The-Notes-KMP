@@ -15,4 +15,6 @@ class NoteLocalDataSourceImpl : NoteLocalDataSource, KoinComponent {
     override suspend fun deleteNote(id: Long) = appDatabase.getDao().deleteNoteById(id)
 
     override suspend fun updateNote(note: Note) = appDatabase.getDao().updateNote(note)
+
+    override suspend fun getNote(id: Long) = appDatabase.getDao().getNoteById(id)
 }

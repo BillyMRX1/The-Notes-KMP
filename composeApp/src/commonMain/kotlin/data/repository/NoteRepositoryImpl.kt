@@ -16,4 +16,6 @@ class NoteRepositoryImpl : NoteRepository,
     override suspend fun updateNote(note: Note) = repository.updateNote(note)
 
     override suspend fun deleteNote(id: Long) = repository.deleteNote(id)
+
+    override suspend fun getNote(id: Long): Note? = repository.getNote(id)
 }

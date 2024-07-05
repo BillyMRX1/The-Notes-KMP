@@ -71,7 +71,7 @@ fun NoteItem(
             .clickable {
                 navController.currentBackStackEntry?.savedStateHandle?.set(
                     EDIT_NOTES_ARGUMENT,
-                    note
+                    note.id
                 )
                 navController.navigate(route = Screen.EditNotes.route)
             }

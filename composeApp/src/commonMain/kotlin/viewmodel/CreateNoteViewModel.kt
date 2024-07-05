@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import domain.model.Note
 import domain.usecase.CreateNoteUseCase
+import domain.usecase.GetNoteUseCase
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -13,6 +14,7 @@ import util.getCurrentTimeAsLong
 class CreateNoteViewModel : ViewModel(), KoinComponent {
 
     private val createNoteUseCase: CreateNoteUseCase by inject()
+    private val getNoteUseCase: GetNoteUseCase by inject()
 
     private val _isNoteValid = mutableStateOf(false)
     val isNoteValid = _isNoteValid
@@ -78,8 +80,10 @@ class CreateNoteViewModel : ViewModel(), KoinComponent {
         isNoteSaved.value = true
     }
 
-    fun populateDataFromLocal(note: Note?) = viewModelScope.launch {
+    fun populateDataFromLocal(id: Long?) = viewModelScope.launch {
         try {
+            val note = getNoteUseCase.execute(id ?: 0L)
+
             _noteId.value = note?.id ?: 0L
             _title.value = note?.title.orEmpty()
             _body.value = note?.content.orEmpty()
