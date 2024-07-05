@@ -7,18 +7,18 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import data.model.Notes
+import viewmodel.HomeViewModel
 
 @Composable
 fun NoteListItems(
-    noteList: List<Notes>?,
+    viewModel: HomeViewModel,
 ) {
     Column(
         Modifier.padding(horizontal = 8.dp, vertical = 8.dp)
     ) {
         LazyColumn {
-            items(noteList ?: emptyList()) { note ->
-                NoteItem(note)
+            items(viewModel.allNotes.value) { note ->
+                NoteItem(note, viewModel)
             }
         }
     }

@@ -1,4 +1,4 @@
-package data.extensions
+package util.extensions
 
 import util.DateFormatHelper.getFormattedDate
 
