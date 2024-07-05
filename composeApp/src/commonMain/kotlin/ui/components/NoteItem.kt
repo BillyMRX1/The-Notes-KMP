@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -20,41 +22,42 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import data.extensions.toStringFormat
-import data.model.Notes
+import util.extensions.toStringFormat
+import domain.model.Note
+import viewmodel.HomeViewModel
 
 @Composable
 fun NoteItem(
-    note: Notes,
+    note: Note,
+    viewModel: HomeViewModel,
 ) {
-//    if (showDialog == true) {
-//        AlertDialog(
-//            onDismissRequest = { viewModel.dismissAlertDialog() },
-//            text = {
-//                Text(
-//                    stringResource(R.string.title_alert_dialog_delete_notes),
-//                    style = MaterialTheme.typography.titleMedium
-//                )
-//            },
-//            confirmButton = {
-//                Button(
-//                    onClick = {
-//                        viewModel.dismissAlertDialog()
-//                        viewModel.deleteNotes(viewModel.noteId.value.getValueOrZero())
-//                    }
-//                ) {
-//                    Text("OK")
-//                }
-//            },
-//            dismissButton = {
-//                Button(
-//                    onClick = { viewModel.dismissAlertDialog() }
-//                ) {
-//                    Text("Cancel")
-//                }
-//            }
-//        )
-//    }
+    if (viewModel.showDialog.value) {
+        AlertDialog(
+            onDismissRequest = { viewModel.dismissAlertDialog() },
+            text = {
+                Text(
+                    "Are you sure you want to delete this note?",
+                    style = MaterialTheme.typography.titleMedium
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        viewModel.deleteNotes(viewModel.noteId.value)
+                    }
+                ) {
+                    Text("OK")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { viewModel.dismissAlertDialog() }
+                ) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
 
     Box(
         modifier = Modifier
@@ -73,16 +76,16 @@ fun NoteItem(
             ) {
                 Text(
                     modifier = Modifier.padding(bottom = 8.dp),
-                    text = if (note.title.isEmpty().not()) note.title else note.body,
+                    text = if (note.title.isEmpty().not()) note.title else note.content,
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.bodyLarge,
                     maxLines = 1
                 )
                 Text(
                     modifier = Modifier.padding(bottom = 8.dp),
-                    text = if (note.body.isEmpty().not() && note.title.isEmpty()
+                    text = if (note.content.isEmpty().not() && note.title.isEmpty()
                             .not()
-                    ) note.body else "No text",
+                    ) note.content else "No text",
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 3
                 )
@@ -95,7 +98,7 @@ fun NoteItem(
             IconButton(
                 modifier = Modifier.padding(8.dp),
                 onClick = {
-
+                    viewModel.showAlertDialog(note.id)
                 }
             ) {
                 Icon(
