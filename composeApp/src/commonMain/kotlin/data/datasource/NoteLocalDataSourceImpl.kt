@@ -3,11 +3,8 @@ package data.datasource
 import data.db.AppDatabase
 import domain.model.Note
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class NoteLocalDataSourceImpl : NoteLocalDataSource, KoinComponent {
-    private val appDatabase: AppDatabase by inject()
-
+class NoteLocalDataSourceImpl(private val appDatabase: AppDatabase) : NoteLocalDataSource {
     override suspend fun getAllNotes(): List<Note> = appDatabase.getDao().getAllNotes()
 
     override suspend fun createNote(note: Note) = appDatabase.getDao().createNote(note)

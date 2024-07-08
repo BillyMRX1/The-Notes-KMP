@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kspCompose)
     alias(libs.plugins.room)
+    alias(libs.plugins.kotlinCocoapods)
 }
 
 kotlin {
@@ -33,12 +34,29 @@ kotlin {
         }
     }
 
+    cocoapods {
+        summary = "Some description for the Shared Module"
+        homepage = "Link to the Shared Module homepage"
+        version = "1.0"
+        ios.deploymentTarget = "17.4"
+        podfile = project.file("../iosApp/Podfile")
+        framework {
+            baseName = "shared"
+            isStatic = true
+        }
+        pod("lottie-ios") {
+            version = "4.4.3"
+            linkOnly = true
+        }
+    }
+
     sourceSets {
 
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
             implementation(libs.room.runtime.android)
         }
         commonMain.dependencies {
@@ -49,13 +67,14 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kottie.animation)
-            implementation(libs.navigation.compose)
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.composeVM)
             implementation(libs.kotlinx.datetime)
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.composeVM)
+            implementation(libs.lifecycle.viewmodel)
+            implementation(libs.navigation.compose)
         }
     }
 }

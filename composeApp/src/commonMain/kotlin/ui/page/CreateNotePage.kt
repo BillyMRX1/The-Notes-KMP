@@ -34,7 +34,7 @@ fun CreateNotePage(
     isEditNote: Boolean? = false,
     noteId: Long? = null,
 ) {
-    val viewModel: CreateNoteViewModel = koinViewModel()
+    val viewModel = koinViewModel<CreateNoteViewModel>()
 
     if (viewModel.isNoteSaved.value) {
         navController.popBackStack(route = Screen.Home.route, inclusive = false)

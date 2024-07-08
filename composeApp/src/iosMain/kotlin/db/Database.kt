@@ -16,9 +16,4 @@ fun getDatabaseBuilder(): AppDatabase {
     ).setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)
         .build()
-//    val dbFilePath = NSHomeDirectory() + "/mrx_note.db"
-//    return Room.databaseBuilder<AppDatabase>(
-//        name = dbFilePath,
-//        factory =  { AppDatabase::class.instantiateImpl() }
-//    )
 }
