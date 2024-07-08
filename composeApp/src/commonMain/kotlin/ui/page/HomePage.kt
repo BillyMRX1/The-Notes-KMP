@@ -21,7 +21,7 @@ import viewmodel.HomeViewModel
 @OptIn(KoinExperimentalAPI::class)
 @Composable
 fun HomePage(navController: NavHostController) {
-    val viewModel: HomeViewModel = koinViewModel()
+    val viewModel = koinViewModel<HomeViewModel>()
 
     viewModel.getAllNotes()
 

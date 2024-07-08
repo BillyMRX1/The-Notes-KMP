@@ -5,10 +5,7 @@ import domain.model.Note
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class NoteRepositoryImpl : NoteRepository,
-    KoinComponent {
-    private val repository: NoteLocalDataSource by inject()
-
+class NoteRepositoryImpl(private val repository: NoteLocalDataSource) : NoteRepository {
     override suspend fun getAllNotes(): List<Note> = repository.getAllNotes()
 
     override suspend fun createNote(note: Note) = repository.createNote(note)

@@ -14,15 +14,16 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.KoinAppDeclaration
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import viewmodel.CreateNoteViewModel
 import viewmodel.HomeViewModel
 
 expect fun platformModule(): Module
 
-fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
+fun initKoin(config: KoinAppDeclaration? = null) =
     startKoin {
-        appDeclaration()
+        config?.invoke(this)
         modules(
             provideDataSourceModule, provideRepositoryModule, provideUseCaseModule,
             provideViewModelModule, platformModule()
@@ -30,11 +31,11 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
     }
 
 val provideDataSourceModule = module {
-    single<NoteLocalDataSource> { NoteLocalDataSourceImpl() }
+    singleOf(::NoteLocalDataSourceImpl).bind(NoteLocalDataSource::class)
 }
 
 val provideRepositoryModule = module {
-    single<NoteRepository> { NoteRepositoryImpl() }
+    singleOf(::NoteRepositoryImpl).bind(NoteRepository::class)
 }
 
 val provideUseCaseModule = module {
