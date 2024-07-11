@@ -13,10 +13,4 @@ fun getDatabaseBuilder(ctx: Context): AppDatabase {
         .setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)
         .build()
-//    val appContext = ctx.applicationContext
-//    val dbFile = appContext.getDatabasePath("mrx_note.db")
-//    return Room.databaseBuilder<AppDatabase>(
-//        context = appContext,
-//        name = dbFile.absolutePath
-//    )
 }
